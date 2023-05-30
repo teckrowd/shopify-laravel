@@ -10,7 +10,7 @@ use Shopify\{
 };
 use App\Shopify\{
   AuthRedirection,
-  Webhook
+  Webhooks
 };
 use App\Models\Session;
 use Shopify\Auth\OAuth;
@@ -19,7 +19,7 @@ class ShopifyAuthController extends Controller {
 
   public function fallback(Request $request) {
     if(Context::$IS_EMBEDDED_APP && $request->query("embedded", false) === "1") {
-      return file_get_contents(public_path('index.html'));
+      return response()->view('embeddedApp');
     }
     else {
       return redirect(Utils::getEmbeddedAppUrl($request->query("host", null)) . "/" . $request->path());
@@ -43,7 +43,7 @@ class ShopifyAuthController extends Controller {
     $host = $request->query("host");
     $shop = Utils::sanitizeShopDomain($request->query("shop"));
 
-    Webhook::register(
+    Webhooks::register(
       $shop,
       $session->getAccessToken()
     );

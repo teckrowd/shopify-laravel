@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Lib;
+namespace App\Shopify;
 
 use Illuminate\Support\Facades\Cookie;
 use Shopify\Auth\OAuthCookie;

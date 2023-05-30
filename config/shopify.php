@@ -15,6 +15,7 @@ return [
     "interval" => EnsureBilling::INTERVAL_ONE_TIME
   ],
   'allowed_domains' => [],
+  'prefix' => env('SHOPIFY_PATH_PREFIX', 'shopify'),
   'api' => [
     'key' => env('SHOPIFY_API_KEY', 'not_defined'),
     'secret' => env('SHOPIFY_API_SECRET', 'not_defined'),

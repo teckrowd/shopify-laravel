@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ShopifyAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,27 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('shopify')->group(function() {
-  // App fallback
-  Route::controller(ShopifyAuthController::class)
-    ->group(function() {
-      Route::middleware(['shopify.installed'])->group(function() {
-        Route::fallback('fallback');
-      });
-
-      // App authorization and register
-      Route::get('/auth', 'auth');
-      Route::get('/auth/callback', 'authCallback');
-    });
-
-  Route::controller(ShopifyWebhookController::class)
-    ->group(function() {
-      Route::post('/webhooks', 'handle');
-    });
+Route::controller(ShopifyAuthController::class)->group(function() {
+  Route::get(config('shopify.prefix', '/'), 'fallback')
+  ->middleware('shopify.installed');
 });
-
-Route::controller(ShopifyWebhookController::class)
-    ->group(function() {
-      Route::post('/webhooks', 'handle');
-    });
-

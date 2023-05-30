@@ -118,7 +118,7 @@ class EnsureBilling {
    * @param array $config
    * @return array
    */
-  private function hasActivePayment(
+  private static function hasActivePayment(
     Session $session,
     array $config
   ): bool {

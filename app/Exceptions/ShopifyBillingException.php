@@ -7,8 +7,8 @@ use Exception;
 class ShopifyBillingException extends Exception {
   
   public function __construct(
-    public ?array $errorData = null, 
-    string $message
+    string $message,
+    public ?array $errorData = null
   ) {
     parent::__construct($message);
   }

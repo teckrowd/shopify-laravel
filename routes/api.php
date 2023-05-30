@@ -2,10 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-  ShopifyAuthController,
-  ShopifyWebhookController
-};
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +13,3 @@ use App\Http\Controllers\{
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-

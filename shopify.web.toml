@@ -1,8 +1,8 @@
-type = "frontend"
+type = "backend"
 port = 8000
-webhooks_path = "/shopify/webhooks"
-auth_callback_path = ["/shopify/auth/callback", "/shopify/auth"]
+webhooks_path = "/webhooks"
+auth_callback_path = ["/auth/callback", "/auth"]
 
 [commands]
 dev = "composer serve"
-build = "composer build"
+build = ""

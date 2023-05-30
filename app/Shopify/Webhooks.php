@@ -27,7 +27,7 @@ class Webhooks {
     foreach($registerActions as $action) {
       if(is_string($action)) {
         $action = [
-          "topic" => Topics::$action
+          "topic" => constant("Shopify\Webhooks\Topics::{$action}")
         ];
       }
       if(!isset($action["success"])) {

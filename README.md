@@ -1,66 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Shopify App Template
+This template can be used to streamline the development of Shopify apps on the Laravel framework with the intention of hosting through Laravel Vapor.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The template is still in development. 
 
-## About Laravel
+This was based off the [Shopify App Template for PHP](https://github.com/Shopify/shopify-app-template-php).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+How is this different:
+- Removes the deployment difficulties/limitations presented by Shopify's solution.
+- Easier and clearer routing.
+- Frontend runs through Laravel. Support for latest Polaris React framework.
+- Intended for use with Laravel Vapor.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Getting Started
+What you need:
+1. A [Shopify partner account](https://partners.shopify.com/signup).
+2. A [development store](https://help.shopify.com/en/partners/dashboard/managing-stores/development-stores#create-a-development-store) for testing.
+3. PHP and [Composer](https://getcomposer.org/) installed.
+4. [Node and NPM](https://nodejs.org/en) installed.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Installing the template
 
-## Learning Laravel
+1. Clone the repository to your local machine.
+    ```
+    git clone https://github.com/teckrowd/shopify-laravel.git
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Install composer dependencies.
+    ```
+    composer install
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. Create an .env file and generate an app key.
+    ```
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Setup your preferred database for testing and migrate the starter tables. Refer to [Laravel's docs](https://laravel.com/docs/10.x#databases-and-migrations) for quick database setup.
+    ```
+    php artisan migrate
+    ```
 
-## Laravel Sponsors
+5. Install node dependencies.
+    ```
+    npm install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+6. Start the development server and happy building! The Shopify CLI will create a tunnel between your local environment and the development store using Cloudflare. For convenience I recommend using your own domain through [Ngrok](https://ngrok.com/).
+    ```
+    npm run shopify.dev -- --tunnel-url https://yourngroktunnel.example:443
+    ```
 
-### Premium Partners
+### Configuration
+You'll need to update the following variables in Laravel's env file before using the app.
+```
+SHOPIFY_API_KEY = ######   // Your apps API key.
+SHOPIFY_API_SECRET = ######   // Your apps API secret.
+SHOPIFY_API_SCOPES = write_products   // Separate each with a commar.
+SHOPIFY_PATH_PREFIX = shopify // URL prefix. https://example.com/{prefix}/{app}
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Development
+This template uses the Shopify CLI for development and publishing your store. To get a better understanding of the CLI and the available commands please refer to [Shopify's documentation](https://shopify.dev/docs/apps/tools/cli/commands).
+
+#### Backend configuration
+In the root directory you will find the `shopify.web.toml` config file. This file is required for starting the development server. You can change the port that the Laravel development server will launch on by changing the value of the `port` property. If you wish to change the other settings please refer to [Shopify's documentation](https://shopify.dev/docs/apps/tools/cli/structure#shopify-web-toml).
+
+#### Frontend configuration
+You'll find a `shopify.web.toml` file in the `resources/js` directory. This file is used for spinning up the frontend through Vite. The location of this file technically does not matter and you are free to move it about to suit your build. Modify this file if you move away from Vite or need extra functionality. Refer to [Shopify's documentation](https://shopify.dev/docs/apps/tools/cli/structure#shopify-web-toml) for more information.
+
+### Deployment
+Before you deploy to Vapor you will need to update the `vapor.yml` config file.
+```
+id: ##
+name: vapor-project
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.2:al2'
+        build:
+            - 'composer install --no-dev'
+            - 'php artisan event:cache'
+```
+
+Pull down Vapor's environment variables.
+```
+vapor env:pull production
+```
+
+Update based on your development `.env` file and push.
+```
+vapor env:push production
+```
+
+Deploy the app.
+```
+vapor deploy production
+```
 
 ## Contributing
+Help improve this template by contributing.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Before opening a pull request, please first discuss the proposed changes via Github issue or <a href="mailto:support@teckrowd.com">email</a>.
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/teckrowd/shopify-laravel/blob/master/LICENSE.md) file for details
